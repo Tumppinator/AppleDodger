@@ -8,7 +8,7 @@ velocity(0.0f),
 playerName(Pname),
 maxVelocity(800.0f),
 rotRate(0.0f),
-SpeedRate(7.0f),
+SpeedRate(1.0f),
 RUN_YET(false)
 {
 	load("sprites/android.png");
@@ -26,17 +26,21 @@ void PlayerObject::update(float elapsedTime)
 		RUN_YET = true;
 	else
 	{
-		timeSinceStart += elapsedTime;
+
+
+		timeSinceStart = clock.getElapsedTime().asSeconds();
+		std::cout << velocity << std::endl;
 		if (timeSinceStart > SpeedRate)
 		{
-			velocityTracker += 1.0f;
-			timeSinceStart = 0;
+			SpeedRate += 2;
+			velocityTracker += 200.0f;
 		}
+
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 		{
 			ARROW_UP = true;
-			velocity -= velocityTracker;
+			velocity -= velocityTracker * elapsedTime;
 			if (ROT_L)
 			{
 				ROT_R = true;
@@ -48,7 +52,7 @@ void PlayerObject::update(float elapsedTime)
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 		{
 			ARROW_UP = true;
-			velocity += velocityTracker;
+			velocity += velocityTracker * elapsedTime;
 			if (ROT_R)
 			{
 				ROT_L = true;
@@ -112,10 +116,10 @@ void PlayerObject::update(float elapsedTime)
 
 void PlayerObject::resetVelocity()
 {
-	velocityTracker = 3.0f;
+	velocityTracker = 500.f;
 }
 
 bool PlayerObject::ARROW_UP = false;
 bool PlayerObject::ROT_L = true;
 bool PlayerObject::ROT_R = true;
-float PlayerObject::velocityTracker = 3;
+float PlayerObject::velocityTracker = 500.f;

@@ -20,7 +20,7 @@ private:
 	static bool ROT_L; // ROT is short for rotation
 	static bool ROT_R;
 
-	float const SpeedRate;
+	float SpeedRate;
 	static float velocityTracker;
 
 	float velocity; // -- left ++ right
@@ -28,6 +28,7 @@ private:
 	float timeSinceStart;
 	float rotRate;
 	float rotAngle;
+	sf::Clock clock;
 };
 
 #endif
